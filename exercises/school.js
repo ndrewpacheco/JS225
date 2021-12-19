@@ -64,14 +64,21 @@ function createSchool() {
     },
     courseReport(courseName) {
       let grades = [];
-      console.log(`=${courseName} Grades=`);
+      let msg = '';
       this.students.forEach(student => {
         let course = student.courses.filter(course => course.name === courseName)[0];
-        // grades.push(course.grade);
+
         if (course !== undefined) {
-          console.log(`${student.name}: ${course.grade}`)
+          grades.push(course.grade);
+          msg += `${student.name}: ${course.grade}\n`;
         }
       });
+      if (grades.includes(undefined)) return undefined;
+      console.log(`=${courseName} Grades=`);
+      console.log(msg)
+      console.log('---')
+      let average = grades.reduce((a,b) => a += b) / grades.length;
+      console.log(`Course Average: ${average}`)
     },
   }
 }

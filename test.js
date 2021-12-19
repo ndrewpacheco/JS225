@@ -1,24 +1,14 @@
-function objectsEqual(obj1, obj2) {
-  let result = true;
-  Object.keys(obj1).forEach(prop => {
+let foo = {
+  a: 1,
+  b: 2,
+};
 
-    if (obj1[prop] !== obj2[prop]) {
-      result = false;
-    }
-  });
+let bar = {
+   a: 'abc',
+   b: 'def',
+   add() {
+     return this.a + this.b;
+   },
+};
 
-  Object.keys(obj2).forEach(prop => {
-
-    if (obj1[prop] !== obj2[prop]) {
-      result = false;
-    }
-  });
-  return result;
-}
-
-console.log(objectsEqual({a: 'foo'}, {a: 'foo'}));                      // true
-console.log(objectsEqual({a: 'foo', b: 'bar'}, {a: 'foo'}));            // false
-console.log(objectsEqual({}, {}));                                      // true
-console.log(objectsEqual({a: 'foo', b: undefined}, {a: 'foo', c: 1}));  // false
-
-// 358
+bar.call(foo)
