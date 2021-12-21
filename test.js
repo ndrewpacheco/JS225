@@ -1,14 +1,12 @@
 let foo = {
-  a: 1,
-  b: 2,
-};
+  a: 0,
+  incrementA() {
+    let incremennt = function() {
+      this.a += 1;
+    }.bind(this);
 
-let bar = {
-   a: 'abc',
-   b: 'def',
-   add() {
-     return this.a + this.b;
-   },
+    increment();
+    increment();
+    increment();
+  }
 };
-
-bar.call(foo)
