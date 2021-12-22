@@ -1,12 +1,8 @@
-let foo = {
-  a: 0,
-  incrementA() {
-    let incremennt = function() {
-      this.a += 1;
-    }.bind(this);
+let numbers = [1, 2, 3, 4];
+function makeCheckEven() {
+  // ... implement this function
+}
 
-    increment();
-    increment();
-    increment();
-  }
-};
+let checkEven = makeCheckEven();
+
+numbers.filter(checkEven); // [2, 4]
