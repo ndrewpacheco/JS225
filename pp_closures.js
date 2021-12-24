@@ -29,7 +29,7 @@
 // add(1);
 // // 1
 // add(42);
-// // 43
+// /ready.status;
 // subtract(39);
 // // 4
 // add(6);
@@ -43,4 +43,4 @@ function startup() {
 }
 
 let ready = startup();
-let systemStatus = // ?
+let systemStatus = startup;
