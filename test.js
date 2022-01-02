@@ -1,47 +1,61 @@
-function makeList() {
-  let todoList = [];
+function makeAccount(number) {
+  let balance = 0;
+  let transactions = [];
 
-  return function(todo) {
-    if (todo) {
-      if (todoList.includes(todo)) {
-        let i = todoList.indexOf(todo);
-        todoList.splice(i, 1);
-        console.log(todo + ' removed!')
-      } else {
-        todoList.push(todo);
-        console.log(todo + ' added!')
+  return {
+    number() {
+      return number;
+    },
 
-      }
-    } else {
-      if (todoList.length === 0) {
-        console.log('The list is empty');
-      } else {
-        todoList.forEach(entry => console.log(entry));
+    balance() {
+      return balance;
+    },
 
-      }
-    }
-  }
+    transactions() {
+      return transactions;
+    },
+
+    deposit(amount) {
+      balance += amount;
+      transactions.push({type: 'deposit', amount });
+      return amount;
+    },
+
+    withdraw(amount) {
+      if (amount > balance) amount = balance;
+      balance -= amount;
+
+      transactions.push({type: 'withdraw', amount });
+      return amount;
+    },
+  };
 }
 
-/*
-When called with an argument that is not already on the list, it adds that argument to the list.
+function makeBank() {
+  accounts: [];
 
-When called with an argument that is already on the list, it removes the element from the list.
+  return {
+    openAccount() {
+      let number = accounts.length + 101;
+      let account = makeAccount(number);
+      accounts.push(account);
+      return account;
+    },
 
-When called without arguments, it logs all items on the list. If the list is empty,
-it logs an appropriate message.
-*/
-let list = makeList();
-list();
-// The list is empty.
-list('make breakfast');
-// make breakfast added!
-list('read book');
-// read book added!
-list();
-// make breakfast
-// read book
-list('make breakfast');
-// make breakfast removed!
-list();
-// read book
+    transfer(source, destination, amount) {
+      return destination.deposit(source.withdraw(amount));
+    }
+  };
+}
+
+let bank = makeBank();
+let account = bank.openAccount();
+account.balance();
+// 0
+account.deposit(17);
+// 17
+let secondAccount = bank.openAccount();
+secondAccount.number();
+// 102
+account.transactions();
+// [Object]

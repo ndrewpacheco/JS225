@@ -1,28 +1,22 @@
-function countdown(num) {
-  (function(n) {
-    while (n >= 0) {
-      console.log(n);
-      n -= 1;
-    }
+// function countdown(num) {
 
-    console.log('Done!');
-  })(num);
-}
-
-
+//   return (function(n) {
+//     for (let i = n; i >= 0; i -= 1) {
+//       console.log(i);
+//     }
+//     console.log('Done!')
+//   }(num));
+// }
 
 function countdown(num) {
-  (function(n) {
 
-    (function count(n) {
-      console.log(n);
-      if (n === 0) return;
-      count(n - 1);
-    })(n);
-
-    console.log('Done!');
-  })(num);
+  return (function recursiveCount(n) {
+    console.log(n);
+    if (n === 0) return console.log('Done!');
+    recursiveCount(n - 1);
+  }(num));
 }
+
 
 
 
