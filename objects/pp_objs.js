@@ -1,40 +1,24 @@
-let invoices = {
-  unpaid: [],
+function makeCountry(name, continent, visited = false) {
 
-  paid: [],
+  return {
+    name,
+    continent,
+    visited,
+    visitCountry() {
+      this.visited = true;
+    },
+    getDescription() {
+      let visitedCountry = this.visited ? '. I have visited ' + this.name : ". I haven't visited " + this.name; 
+      return this.name + ' is located in ' + this.continent + visitedCountry + '.' ;
 
-  add(name, amount) {
-    this.unpaid.push({name, amount});
-  },
+    },
+  };
+}
 
-  payInvoice(name) {
-    let unpaidInvoices = [];
+let chile = makeCountry('The Republic of Chile', 'South America');
+let canada = makeCountry('Canada', 'North America');
+let southAfrica = makeCountry('The Republic of South Africa', 'Africa');
 
-    this.unpaid.forEach(invoice => {
-      if (invoice.name === name) {
-        this.paid.push(invoice);
-      } else {
-        unpaidInvoices.push(invoice);
-      }
-      this.unpaid = unpaidInvoices;
-    })
-  },
-
-  totalPaid() {
-    return this.paid.map(invoice => invoice.amount).reduce((a, b) => a += b);
-  },
-
-  totalDue() {
-    return this.unpaid.map(invoice => invoice.amount).reduce((a, b) => a += b);
-  },
-};
-
-invoices.add("Due North Development", 250);
-invoices.add("Moonbeam Interactive", 187.50);
-invoices.add("Slough Digital", 300);
-
-invoices.payInvoice('Due North Development');
-invoices.payInvoice('Slough Digital');
-console.log(invoices.totalPaid());
-console.log(invoices.totalDue());
-
+console.log(canada.getDescription()); // "Canada is located in North America. I haven't visited Canada."
+canada.visitCountry();
+console.log(canada.getDescription()); // "Canada is located in North America. I have visited Canada."
