@@ -1,0 +1,231 @@
+<section class="container">
+<div class="row">
+<div class="columns small-12">
+
+</div>
+</div>
+
+<div class="row">
+<div class="columns small-12">
+<div class="white-background full-width-background">
+
+</div>
+</div>
+</div>
+<div class="row">
+<div class="columns small-12" id="flash-message">
+
+</div>
+</div>
+<div class="row">
+<div class="columns small-12">
+
+
+</div>
+</div>
+<div class="row">
+<div class="columns small-12" id="main-content">
+<h3>Modern JavaScript: Classes</h3>
+<hr>
+<div class="tealeaf-markup"><h2>Classes</h2>
+
+<p>The ECMAScript 6 (ES6) standard added the <code>class</code> keyword to JavaScript. In effect, classes act like <strong>syntactic sugar</strong> -- syntax designed to be easier to read or use -- that makes it easier for programmers to migrate to JavaScript from other OOP languages. In essence, they provide little more than a more natural and possibly familiar way to create constructors and prototypes.</p>
+
+<p>That's not the entire story, of course. In JavaScript, there always seems to be some unusual or unexpected behavior behind every feature, no matter how ordinary it looks. It should come as no surprise that classes are no different. We'll barely touch on that in this assignment. For now, think of classes as syntactic sugar, and you'll be okay.</p>
+
+<p>The syntax for defining classes is similar to that of defining functions. In particular, both functions and classes have two significant definition styles: declarations and expressions. We'll examine how classes do that in this assignment.</p>
+
+<h3>A Simple Type</h3>
+
+<p>Before we get into the <code>class</code> syntax, let's first define a simple <code>Rectangle</code> type using the familiar constructor and prototype pattern:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">Rectangle</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Rectangle<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>getArea <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> rec <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rectangle</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> Rectangle<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">// function</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec <span class="token keyword">instanceof</span> <span class="token class-name">Rectangle</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec<span class="token punctuation">.</span>constructor<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// [Function: Rectangle]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec<span class="token punctuation">.</span><span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">// 50</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>This code is straightforward and easy to follow, and the outputs should be exactly what you expect. In particular, the object created by the <code>Rectangle</code> constructor, <code>rec</code>, is an instance of the <code>Rectangle</code> type, and we can call the <code>getArea</code> method from its prototype to calculate the area.</p>
+
+<p>It's interesting to note that you can call the <code>Rectangle</code> constructor without the <code>new</code> keyword. However, if you do, the constructor won't work properly. It's possible to write constructors that work with or without the <code>new</code> keyword, but most JavaScript developers won't bother.</p>
+
+<p>Now, let's see what this code looks like using the <code>class</code> keyword.</p>
+
+<h3>Class Declarations</h3>
+
+<p>The simplest way to create classes in JavaScript is with the <strong>class declaration</strong>, which looks similar to classes in other languages.</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> rec <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rectangle</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> Rectangle<span class="token punctuation">)</span><span class="token punctuation">;</span>         <span class="token comment" spellcheck="true">// function</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec <span class="token keyword">instanceof</span> <span class="token class-name">Rectangle</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec<span class="token punctuation">.</span>constructor<span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// [class Rectangle]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec<span class="token punctuation">.</span><span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">// 50</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>Class declarations begin with the <code>class</code> keyword, followed by the name of the class. The rest of the syntax looks similar to the simplified (concise) method definition that you can use in object literals. However, there are no commas between the properties of the class.</p>
+
+<p>One significant difference is that the constructor is now a method named <code>constructor</code> inside our class instead of being a standalone function. Other methods have no special meaning; you can define as many as you need. In this case, we define <code>getArea</code>, and it gets placed in <code>Rectangle.prototype</code>.</p>
+
+<p>In most situations, instantiating a new object from a class is identical to creating one with the constructor/prototype pattern:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">let</span> rec <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rectangle</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="line-numbers-rows"><span></span></span></code></pre></div>
+
+<p>You can even call methods on <code>Rectangle.prototype</code> in the same way:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec<span class="token punctuation">.</span><span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment" spellcheck="true">// 50</span>
+<span class="line-numbers-rows"><span></span></span></code></pre></div>
+
+<p>The class code and instantiation is so similar to the constructor/prototype code that <code>typeof</code> even returns <code>'function'</code>, and the object checks out as an instance of <code>Rectangle</code>:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> Rectangle<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// "function"</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>rec <span class="token keyword">instanceof</span> <span class="token class-name">Rectangle</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+<span class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+
+<p>One minor difference is that <code>rec.constructor</code> may produce different results in the two patterns. For example, in Node, logging <code>rec.constructor</code> produces <code>[Function: Rectangle]</code> for the constructor/prototype example, and <code>[class Rectangle]</code> for the class example. This difference is implementation dependent, and not considered significant.</p>
+
+<p>There is one significant difference, however: you <strong>must</strong> use the <code>new</code> keyword to call the constructor when using a <code>class</code>. JavaScript raises a <code>TypeError</code> if you try to call the constructor without the <code>new</code> keyword.</p>
+
+<p>Using classes, it's possible to do everything you can with the constructor and prototype pattern. However, the class syntax is easier to read and write, and the enforced <code>new</code> keyword helps prevent bugs.</p>
+
+<h3>Class Expressions</h3>
+
+<p>Functions have an expression form that does not require a name after the <code>function</code> keyword. Classes have a similar expression form. Consider the following code:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">let</span> Rectangle <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>Aside from the syntax, class expressions are functionally equivalent to class declarations. Which you use is primarily a matter of style.</p>
+
+<h3>Classes as First-Class Citizens</h3>
+
+<p>In programming, a <strong>first-class citizen</strong> is a value that can be passed into a function, returned from a function, and assigned to a variable. Like JavaScript functions, JavaScript classes are also first-class values. For example, you can pass classes into functions as arguments:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">createObject</span><span class="token punctuation">(</span>classDef<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">classDef</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Foo</span> <span class="token punctuation">{</span>
+  <span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Hi!'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">let</span> obj <span class="token operator">=</span> <span class="token function">createObject</span><span class="token punctuation">(</span>Foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+obj<span class="token punctuation">.</span><span class="token function">sayHi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">//=&gt; logs 'Hi!'</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>If that doesn't surprise you, that's good! Earlier, we mentioned that classes are just functions, and demonstrated that with <code>typeof</code>:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">typeof</span> Foo<span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// =&gt; "function"</span>
+<span class="line-numbers-rows"><span></span></span></code></pre></div>
+
+<p>Since functions are first-class objects, classes must also be first-class objects!</p>
+
+<h3>Static Methods and Properties</h3>
+
+<p>You may remember seeing some methods like <code>Array.isArray</code> and <code>Object.keys</code> that are invoked with <code>Array</code> or <code>Object</code> as the caller instead of an actual array or object. For instance:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js">Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// =&gt; true</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">// raises a TypeError</span>
+<span class="line-numbers-rows"><span></span><span></span></span></code></pre></div>
+
+<p>Methods like these are defined on the constructor for the type, e.g., <code>Array</code> or <code>Object</code>. You may sometimes hear such methods described as <em>class methods</em>. However, in JavaScript, that's a bit of a misnomer. Instead, you should call such methods <strong>static methods</strong>.</p>
+
+<div class="alert-box info">
+
+<p>Ordinary methods -- those defined on a prototype object -- are sometimes called <strong>instance methods</strong> or <strong>object methods</strong> since you need an instance of (an object) the type. More commonly, they are simply called methods.</p>
+
+</div>
+
+<p>You can define static methods on your custom constructor methods. For instance, let's add one to the <code>Rectangle</code> type we defined earlier:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">Rectangle</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Rectangle<span class="token punctuation">.</span>getDescription <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token string">'A rectangle is a shape with 4 sides'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Rectangle<span class="token punctuation">.</span><span class="token function">getDescription</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// A rectangle is a shape with 4 sides</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>This code defines a static method named <code>getDescription</code> on the <code>Rectangle</code> constructor. To use this method, you invoke it with the <code>Rectangle</code> function object.</p>
+
+<p>It should come as no surprise that you can define static methods with the <code>class</code> keyword as well: just use the <code>static</code> keyword:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">static</span> <span class="token function">getDescription</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token string">'A rectangle is a shape with 4 sides'</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>Rectangle<span class="token punctuation">.</span><span class="token function">getDescription</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// A rectangle is a shape with 4 sides</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>As before, we call the method with the name of the constructor function -- in the case of a <code>class</code>, the constructor function's name is the name of the class.</p>
+
+<p>You can also define static properties. Static properties are properties that are defined on the constructor function instead of the individual objects. One well-known example of a static property is the <code>length</code> property used by the <code>String</code> type. To define a static property with the constructor and prototype pattern, just add it to the constructor function object:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js">Rectangle<span class="token punctuation">.</span>description <span class="token operator">=</span> <span class="token string">'A rectangle is a shape with 4 sides'</span><span class="token punctuation">;</span>
+<span class="line-numbers-rows"><span></span></span></code></pre></div>
+
+<p>To do the same thing with a <code>class</code>, just use the <code>static</code> keyword inside the <code>class</code>:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+  <span class="token keyword">static</span> description <span class="token operator">=</span> <span class="token string">'A rectangle is a shape with 4 sides'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div>
+
+<p>As of this writing in late 2020, static properties are a recent addition to JavaScript. They aren't completely supported, yet. Fortunately, recent versions of Node support them, which means we can use them in our code in this course. If you want to use static properties in a browser or an older version of Node that doesn't support them, you <em>can</em> accomplish the same effect by adding a property directly to the class:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js">Rectangle<span class="token punctuation">.</span>description <span class="token operator">=</span> <span class="token string">'A rectangle is a shape with 4 sides'</span><span class="token punctuation">;</span>
+<span class="line-numbers-rows"><span></span></span></code></pre></div>
+
+<p>Yes, that code is identical to what we would write if we were using the constructor/prototype pattern.</p>
+</div>
+
+</div>
+</div>
+</section>

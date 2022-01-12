@@ -1,12 +1,15 @@
-let ninjaA = (function() {
-  function Ninja(){};
-  return new Ninja();
-})();
+function newPerson(name) {
+  let obj = Object.create(null);
+  obj.log = function() {console.log(name)};
+  Object.defineProperties(obj, {
+    log: {
+      writable: false,
+    },
+  });
+  return obj;
+}
 
-// create a ninjaB object
-let ninjaB = (function() {
-  return new (ninjaA.constructor)();
-})();
-
-console.log(ninjaA);    // should log true
-console.log(ninjaB.constructor === ninjaA.constructor);    // should log true
+let me = newPerson('Shane Riley');
+me.log();     // => Shane Riley
+me.log = function() { console.log('Amanda Rose'); };
+me.log();     // => Shane Riley

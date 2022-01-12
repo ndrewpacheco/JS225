@@ -1,0 +1,140 @@
+<section class="container">
+<div class="row">
+<div class="columns small-12">
+
+</div>
+</div>
+
+<div class="row">
+<div class="columns small-12">
+<div class="white-background full-width-background">
+
+</div>
+</div>
+</div>
+<div class="row">
+<div class="columns small-12" id="flash-message">
+
+</div>
+</div>
+<div class="row">
+<div class="columns small-12">
+
+
+</div>
+</div>
+<div class="row">
+<div class="columns small-12" id="main-content">
+<h3>Modern JavaScript: Inheritance with Classes</h3>
+<hr>
+<div class="tealeaf-markup"><h2>Inheritance With Class Declarations</h2>
+
+<p>In a prior assignment, we learned how one constructor's prototype can inherit from another constructor's prototype. For example:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">Rectangle</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Rectangle<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>getArea <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+Rectangle<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>toString <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`[Rectangle </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> x </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">]`</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">function</span> <span class="token function">Square</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Rectangle<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> size<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+Square<span class="token punctuation">.</span>prototype <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>Rectangle<span class="token punctuation">.</span>prototype<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Square<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>constructor <span class="token operator">=</span> Square<span class="token punctuation">;</span>
+
+Square<span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>toString <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`[Square </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> x </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">]`</span></span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>Let's convert that code to use classes instead of constructors and prototypes. The <code>Square</code> constructor's prototype inherits from <code>Rectangle.prototype</code>, which gives square objects access to methods defined for rectangle objects. We can do the same thing with classes, but we now use the clean, straightforward syntax provided for JavaScript classes:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">class</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>length<span class="token punctuation">,</span> width<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">=</span> length<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">getArea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`[Rectangle </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">]`</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Square</span> <span class="token keyword">extends</span> <span class="token class-name">Rectangle</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token template-string"><span class="token string">`[Square] </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>width <span class="token operator">*</span> <span class="token keyword">this</span><span class="token punctuation">.</span>length<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">`</span></span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>The <code>extends</code> keyword signifies that the class named to the left of <code>extends</code> should inherit from the class specified to the right of <code>extends</code>. Note that we don't define <code>getArea</code> on the <code>Square</code> class since <code>Square</code> inherits it from <code>Rectangle</code> and doesn't need to customize or override the method.</p>
+
+<h3><code>super</code></h3>
+
+<p>Note also that the <code>Square</code> constructor calls a function that is represented by the keyword <code>super</code>. When called inside the <code>constructor</code> method, the <code>super</code> keyword refers to the constructor method for the parent class (the class that we inherit from). Thus, <code>super(size, size)</code> performs the same role performed by this code from our constructor/prototype example:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">function</span> <span class="token function">Square</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  Rectangle<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> size<span class="token punctuation">,</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span></span></code><div class="prism-highlight highlight" style="top: 25px; height: 24px;"></div></pre></div>
+
+<p>You don't need to use <code>super</code> in every subclass, but in most cases you do. In particular, if the superclass's constructor creates any object properties, you must call <code>super</code> to ensure that those properties are set properly. For instance, in the <code>Rectangle</code> class above, we create two properties in the <code>Rectangle</code> constructor, so we must call <code>super</code> in <code>Square</code>'s constructor. </p>
+
+<p>If you do call <code>super</code> in a subclass's constructor, you must call it before you use <code>this</code> in that constructor.</p>
+
+<h2>Inheritance With Class Expressions</h2>
+
+<p>Let's look at another example of inheritance with classes:</p>
+
+<div class="markup-code-block"><div class="markup-actions"><div class="markup-copy-block"><button type="button"><i class="fa fa-copy"></i><span>Copy Code</span></button></div></div><pre class="language-js line-numbers"><code class=" language-js"><span class="token keyword">let</span> Person <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>name <span class="token operator">=</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>age <span class="token operator">=</span> age<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">sayName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`My name is </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> Student <span class="token operator">=</span> <span class="token keyword">class</span> <span class="token class-name">extends</span> Person <span class="token punctuation">{</span>
+  <span class="token function">constructor</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">,</span> semester<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">super</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> age<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">this</span><span class="token punctuation">.</span>semester <span class="token operator">=</span> semester<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token function">enrollInCourse</span><span class="token punctuation">(</span>courseNumber<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token template-string"><span class="token string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token keyword">this</span><span class="token punctuation">.</span>name<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string"> has enrolled in course </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>courseNumber<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.`</span></span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">let</span> student <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Student</span><span class="token punctuation">(</span><span class="token string">'Kim'</span><span class="token punctuation">,</span> <span class="token number">22</span><span class="token punctuation">,</span> <span class="token string">'Fall'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+student<span class="token punctuation">.</span><span class="token function">sayName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// logs 'My name is Kim.'</span>
+student<span class="token punctuation">.</span><span class="token function">enrollInCourse</span><span class="token punctuation">(</span><span class="token string">'JS120'</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// logs 'Kim has enrolled in course JS120.'</span>
+<span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div>
+
+<p>In this example, the <code>Student</code> class inherits from the <code>Person</code> class. That gives student objects access to methods of the <code>Person</code> class and extends person objects further by adding a <code>semester</code> property and an <code>enrollInCourse</code> method. Notice that we've reused <code>Person</code>'s constructor inside the <code>Student</code> constructor, and calling <code>super</code> with <code>name</code> and <code>age</code> since the <code>Student</code> constructor expects those arguments. We also assign the <code>semester</code> argument to the <code>semester</code> property after <code>super</code> returns.</p>
+
+<p>Note that this most recent example uses class expressions instead of class declarations.</p>
+</div>
+
+</div>
+</div>
+</section>
